@@ -24,7 +24,7 @@
     };
     let d;
     b.addEventListener('click', () => { b.classList.remove('hop'); void b.offsetWidth; b.classList.add('hop'); setTimeout(() => b.classList.remove('hop'), 600); });
-    b.onpointerdown = e => { d = [e.clientX - b.offsetLeft, e.clientY - b.offsetTop]; b.classList.add('on'); b.setPointerCapture(e.pointerId); };
+    b.onpointerdown = e => { if (e.pointerType === 'touch') return; d = [e.clientX - b.offsetLeft, e.clientY - b.offsetTop]; b.classList.add('on'); b.setPointerCapture(e.pointerId); };
     b.onpointermove = e => { if (d) place(e.clientX - d[0], e.clientY - d[1]); };
     b.onpointerup = b.onpointercancel = () => { d = null; b.classList.remove('on'); };
     b.onkeydown = e => {
@@ -40,11 +40,10 @@
     box.replaceChildren(...list.map((p, i) => el('a', { className: lead && !i ? 'tile lead-tile' : 'tile', href: '#' + p.id },
       el('span', { className: 'shot' },
         el('img', { src: `${A}covers/${p.id}.webp`, alt: '', loading: 'lazy' }),
-        el('span', { className: 'tags' }, ...p.tags.slice(0, 4).map(x => el('span', { className: 'tag', textContent: x }))),
         ...(p.award ? [el('span', { className: 'award', textContent: p.award })] : [])),
       el('span', { className: 'cap' },
-        el('strong', { textContent: p.title }), el('em', { textContent: p.year }),
-        el('small', { textContent: p.genre || p.tags.join(', ') })))));
+        el('strong', {}, p.title + '\u00a0', el('i', { textContent: '↗', ariaHidden: 'true' })), el('em', { textContent: p.year }),
+        el('small', { textContent: p.tags.slice(0, 3).join(', ') })))));
   }
   const games = all.filter(p => p.type === 'game'), illus = all.filter(p => p.type === 'illustration');
   render($('gameList'), games, true);
@@ -89,7 +88,8 @@
       if (w > h) n.className = 'wide';
       m.append(n);
     });
-    $('vBody').replaceChildren(el('h2', { id: 'vTitle', textContent: p.title }), el('p', { className: 'desc', textContent: p.desc }), dl, m);
+    $('vBody').replaceChildren(el('h2', { id: 'vTitle', textContent: p.title }), el('p', { className: 'desc', textContent: p.desc }), dl, m,
+      el('button', { type: 'button', className: 'v-next', onclick: () => go(1) }, el('span', { className: 'mono', textContent: 'Next project' }), all[(cur + 1) % all.length].title + ' →'));
     if (!v.open) { back = scrollY; v.showModal(); }
     v.scrollTop = 0;
   }

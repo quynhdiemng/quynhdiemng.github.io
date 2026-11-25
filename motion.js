@@ -3,7 +3,7 @@
   const ease = 'cubic-bezier(.22,1,.36,1)';
 
   // Menu underline follows the section on screen
-  const links = [...document.querySelectorAll('.bar nav a')];
+  const links = [...document.querySelectorAll('.bar nav a,.bar .cta')];
   const spy = new IntersectionObserver(es => es.forEach(e => {
     const a = links.find(l => l.hash === '#' + e.target.id);
     if (e.isIntersecting) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
