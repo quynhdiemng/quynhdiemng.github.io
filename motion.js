@@ -11,13 +11,13 @@
   links.forEach(l => spy.observe(document.querySelector(l.hash)));
 
   // Strip of words: second copy makes the loop seamless
-  const strip = document.querySelector('.marquee .clip div');
+  const strip = document.querySelector('.marquee div');
   [...strip.children].forEach(s => { const c = s.cloneNode(true); c.setAttribute('aria-hidden', 'true'); strip.append(c); });
 
   if (calm) return;
 
   // Hero: text rises, sprites pop in one after another
-  document.querySelectorAll('.hero-text > *').forEach((n, i) =>
+  document.querySelectorAll('.hero-text .kicker,.hero h1 span,.hero-text .lead').forEach((n, i) =>
     n.animate([{ opacity: 0, transform: 'translateY(28px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: i * 90, easing: ease, fill: 'backwards' }));
   document.querySelectorAll('.spr').forEach((n, i) => {
     n.style.setProperty('--d', -i * 0.7 + 's');
@@ -33,8 +33,26 @@
       e.target.animate([{ opacity: 0, transform: 'translateY(40px)' }, { opacity: 1, transform: 'none' }], { duration: 650, delay: k++ * 80, easing: ease, fill: 'backwards' });
     });
   });
-  const watch = root => root.querySelectorAll('.head,.year>h3,.card,.about-top>*,.about h3,.skills>div,.job,.contact .wrap>*').forEach(n => io.observe(n));
+  const watch = root => root.querySelectorAll('.kicker,.head,.filters,.tile,.about-text>*,.kit>div,.job,.mail,.cells>div').forEach(n => io.observe(n));
   watch(document);
+
+  // Hero glow follows the pointer
+  const hero = document.querySelector('.hero');
+  hero.addEventListener('pointermove', e => {
+    const r = hero.getBoundingClientRect();
+    hero.style.setProperty('--gx', e.clientX - r.left + 'px');
+    hero.style.setProperty('--gy', e.clientY - r.top + 'px');
+  });
+
+  // Numbers count up once
+  const nums = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    nums.unobserve(e.target);
+    const n = +e.target.textContent, t0 = performance.now();
+    const tick = t => { const k = Math.max(0, Math.min(1, (t - t0) / 900)); e.target.textContent = Math.round(n * (1 - (1 - k) ** 3)); if (k < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  }));
+  document.querySelectorAll('[data-n]').forEach(n => nums.observe(n));
 
   // Filtered results animate in again
   new MutationObserver(() => watch(document.getElementById('gameList'))).observe(document.getElementById('gameList'), { childList: true });

@@ -3,20 +3,20 @@
   const A = 'assets/';
   const el = (t, props = {}, ...kids) => { const n = Object.assign(document.createElement(t), props); n.append(...kids); return n; };
 
-  /* ---- hero sprites: file, project, then left/bottom/width on desktop, then on phone ---- */
+  /* ---- hero sprites: file, project, left, bottom, width (all % of the stage) ---- */
   const sprites = [
-    ['cat-grey', 'Meow Block', '6%', '80%', '11%', '62%', '265px', '34%'],
-    ['cat-orange', 'Meow Block', '87%', '82%', '9%', '4%', '270px', '30%'],
-    ['drop-blue', 'Water Match Factory', '33%', '40px', '13%', '0%', '50px', '25%'],
-    ['drop-pink', 'Water Match Factory', '71%', '34px', '13%', '77%', '50px', '22%'],
-    ['cubes', 'Color Toy Block', '83%', '50px', '17%', '56%', '20px', '30%'],
-    ['cats', 'Meow Block', '45%', '30px', '28%', '22%', '62px', '52%'],
-    ['cat-yarn', 'Meow Block', '67%', '18px', '8%', '17%', '22px', '19%']];
+    ['cubes', 'Color Toy Block', '56%', '62%', '40%'],
+    ['cat-grey', 'Meow Block', '4%', '60%', '36%'],
+    ['drop-blue', 'Water Match Factory', '-2%', '22%', '28%'],
+    ['drop-pink', 'Water Match Factory', '76%', '20%', '26%'],
+    ['cats', 'Meow Block', '19%', '14%', '60%'],
+    ['cat-orange', 'Meow Block', '67%', '0%', '25%'],
+    ['cat-yarn', 'Meow Block', '8%', '0%', '20%']];
   const stage = $('stage');
   sprites.forEach(([f, label, ...pos]) => {
     const b = el('button', { className: 'spr', type: 'button', ariaLabel: label + ' sprite, use arrow keys to move' },
       el('span', { textContent: label }), el('img', { src: `${A}sprites/${f}.webp`, alt: '', draggable: false }));
-    ['--x', '--b', '--w', '--mx', '--mb', '--mw'].forEach((k, i) => b.style.setProperty(k, pos[i]));
+    ['--x', '--b', '--w'].forEach((k, i) => b.style.setProperty(k, pos[i]));
     const place = (l, t) => {
       b.style.bottom = 'auto';
       b.style.left = Math.max(-20, Math.min(stage.clientWidth - b.offsetWidth + 20, l)) + 'px';
@@ -36,33 +36,28 @@
 
   /* ---- lists: newest first; inside one year the order of projects.js is kept ---- */
   const all = ['game', 'illustration'].flatMap(t => PROJECTS.filter(p => p.type === t).sort((a, b) => b.year - a.year));
-  function render(box, list, big) {
-    box.replaceChildren();
-    for (const y of [...new Set(list.map(p => p.year))]) {
-      const items = list.filter(p => p.year === y), n = items.length;
-      const lead = n === 1 || (big && n === 4) ? 1 : 0;   // one wide card
-      const rest = n - lead;
-      const halves = rest % 3 === 2 ? 2 : rest % 3 === 1 ? 4 : 0; // keeps every row full
-      const grid = el('div', { className: 'grid' });
-      items.forEach((p, i) => {
-        const c = i < lead ? 'card full' : i - lead < halves ? 'card half' : 'card';
-        grid.append(el('a', { className: c, href: '#' + p.id },
-          el('span', { className: 'shot' }, el('img', { src: `${A}covers/${p.id}.webp`, alt: '', loading: 'lazy' }), ...(p.award ? [el('b', { textContent: p.award })] : [])),
-          el('strong', { textContent: p.title }),
-          el('small', { textContent: [p.period !== String(p.year) && p.period, p.tags.join(', ')].filter(Boolean).join(' · ') })));
-      });
-      box.append(el('div', { className: 'year' }, el('h3', { textContent: y }), grid));
-    }
+  function render(box, list, lead) {
+    box.replaceChildren(...list.map((p, i) => el('a', { className: lead && !i ? 'tile lead-tile' : 'tile', href: '#' + p.id },
+      el('span', { className: 'shot' },
+        el('img', { src: `${A}covers/${p.id}.webp`, alt: '', loading: 'lazy' }),
+        el('span', { className: 'tags' }, ...p.tags.slice(0, 4).map(x => el('span', { className: 'tag', textContent: x }))),
+        ...(p.award ? [el('span', { className: 'award', textContent: p.award })] : [])),
+      el('span', { className: 'cap' },
+        el('strong', { textContent: p.title }), el('em', { textContent: p.year }),
+        el('small', { textContent: p.genre || p.tags.join(', ') })))));
   }
-  const games = all.filter(p => p.type === 'game');
+  const games = all.filter(p => p.type === 'game'), illus = all.filter(p => p.type === 'illustration');
   render($('gameList'), games, true);
-  render($('illusList'), all.filter(p => p.type === 'illustration'), false);
+  render($('illusList'), illus, false);
+  $('nGames').textContent = games.length;
+  $('nIllus').textContent = illus.length;
 
   ['All', ...new Set(games.flatMap(p => p.tags))].forEach((t, i) => {
-    const b = el('button', { type: 'button', textContent: t, ariaPressed: String(!i) });
+    const list = i ? games.filter(p => p.tags.includes(t)) : games;
+    const b = el('button', { type: 'button', ariaPressed: String(!i) }, t, el('i', { textContent: list.length }));
     b.onclick = () => {
-      [...$('filters').children].forEach(x => { x.ariaPressed = String(x === b); });
-      render($('gameList'), i ? games.filter(p => p.tags.includes(t)) : games, true);
+      $('filters').querySelectorAll('button').forEach(x => { x.ariaPressed = String(x === b); });
+      render($('gameList'), list, !i);
     };
     $('filters').append(b);
   });
