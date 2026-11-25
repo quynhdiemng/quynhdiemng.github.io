@@ -1,0 +1,27 @@
+/* Motion only. Delete this file and motion.js to get the still version back. */
+.marquee{background:var(--green);color:var(--sand);overflow:hidden;font:800 1.5rem/1 var(--display)}
+.marquee .clip div{display:flex;width:max-content;padding-block:18px 14px}
+.marquee span{display:flex;align-items:center;white-space:nowrap}
+.marquee span::after{content:"";width:12px;height:12px;border:2px dashed var(--pink);margin-inline:28px;transform:translateY(-2px)}
+.bar nav a{position:relative}
+.bar nav a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:3px;border-radius:3px;background:var(--pink);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.bar nav a:hover::after,.bar nav a[aria-current]::after{transform:scaleX(1)}
+.shot img{transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.shot{transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.card:hover .shot{transform:translateY(-6px)}
+.shot::after{transform:scale(.97);transition:opacity .15s,transform .35s cubic-bezier(.22,1,.36,1)}
+.card:hover .shot::after,.card:focus-visible .shot::after{transform:none}
+.filters button{transition:background-color .15s,transform .15s}
+.filters button:active{transform:scale(.94)}
+.skills div{transition:background-color .25s,transform .25s}
+.skills div:hover{background:var(--pink);transform:translateY(-4px)}
+@media(prefers-reduced-motion:no-preference){
+  .marquee .clip div{animation:slide 45s linear infinite}
+  .marquee:hover .clip div{animation-play-state:paused}
+  .spr img{animation:bob 3.4s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+  .spr:hover img,.spr.on img{animation-play-state:paused}
+  .spr:nth-of-type(even) img{animation-name:sway}
+}
+@keyframes slide{to{transform:translateX(-50%)}}
+@keyframes bob{from{transform:translateY(5px)}to{transform:translateY(-9px)}}
+@keyframes sway{from{transform:translateY(4px) rotate(-3deg)}to{transform:translateY(-6px) rotate(3deg)}}

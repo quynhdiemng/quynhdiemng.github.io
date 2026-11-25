@@ -1,0 +1,71 @@
+/* Game-scene look. Same three colours. */
+.hero{position:relative}
+.hero-in{display:block;position:relative;min-height:0;padding-block:0}
+.hero-text{padding-top:clamp(84px,7.6vw,108px);padding-bottom:150px}
+.hero h1{font-size:min(9.7vw,8.6rem);white-space:nowrap;line-height:1.15}
+.role{margin-top:14px}
+.lead{max-width:24ch}
+.stage{position:absolute;inset:0 var(--gutter);height:auto;min-height:0;pointer-events:none}
+.spr{pointer-events:auto;left:var(--x);bottom:var(--b);width:var(--w)}
+.hint{bottom:auto;top:20px}
+.ground{position:absolute;left:0;bottom:-1px;width:100%;height:110px;display:block;fill:var(--green)}
+.marquee{position:relative}
+
+/* scalloped edge, taken from the rug under the Meow Block cats */
+.games,.illus,.about,.contact{position:relative}
+.illus::before,.about::before,.contact::before,.marquee::after{content:"";position:absolute;left:0;right:0;height:22px;z-index:1;pointer-events:none;background:radial-gradient(circle at 22px 0,var(--edge) 21.5px,#0000 22px) 0 0/44px 22px repeat-x}
+.marquee{overflow:visible}
+.marquee .clip{overflow:hidden}
+.marquee::after{top:calc(100% - 1px);--edge:var(--green)}
+.illus::before{top:-1px;--edge:var(--sand)}
+.about::before{top:-1px;--edge:var(--green)}
+.contact::before{top:-1px;--edge:var(--sand)}
+
+/* cards behave like game buttons: thick frame, lip, press on hover */
+.shot{border:4px solid var(--green);border-radius:22px;background:var(--green);box-shadow:0 9px 0 var(--green);transition:transform .15s,box-shadow .15s}
+.shot img{border-radius:17px}
+.illus .shot{border-color:var(--sand);background:var(--sand);box-shadow:0 9px 0 var(--pink)}
+.card:hover .shot{transform:translateY(6px);box-shadow:0 3px 0 var(--green)}
+.illus .card:hover .shot{box-shadow:0 3px 0 var(--pink)}
+.card:active .shot{transform:translateY(9px);box-shadow:none}
+.shot::after{inset:-16px -14px -22px}
+.card strong{margin-top:24px}
+.shot b{animation:none;transform:rotate(-3deg);left:14px;bottom:14px}
+.year{border-top:0;padding-block:28px}
+.year>h3{background:var(--green);color:var(--pink);border-radius:999px;padding:10px 20px 6px;justify-self:start;font-size:clamp(1.6rem,2.6vw,2.3rem);line-height:1}
+.illus .year>h3{background:var(--pink);color:var(--green)}
+h2{font-size:clamp(3.4rem,8.5vw,7rem)}
+.about{overflow:hidden}
+.skills div{border-radius:18px}
+
+/* contact */
+.contact{overflow:hidden;padding-block:clamp(90px,10vw,140px) 0;text-align:center}
+.mail{font-size:min(7.2vw,5.6rem);margin:0;text-decoration:none;line-height:1.15;border-bottom:.07em dashed var(--green)}
+.mail:hover{border-bottom-style:solid}
+.links{justify-content:center;flex-wrap:wrap;gap:20px;margin-top:40px}
+.links a,.links button{background:var(--sand);color:var(--green);border:0;text-decoration:none;font:800 1.35rem/1 var(--display);padding:18px 32px 15px;border-radius:999px;box-shadow:0 6px 0 var(--green);transition:transform .12s,box-shadow .12s}
+.links a:hover,.links button:hover{transform:translateY(3px);box-shadow:0 3px 0 var(--green)}
+.parade{display:flex;justify-content:center;align-items:flex-end;gap:clamp(12px,3vw,48px);margin-top:64px;position:relative;z-index:1}
+.parade img{width:auto;height:clamp(60px,12vw,180px);margin-bottom:-14px}
+.parade img:nth-child(2n){height:clamp(44px,8vw,116px)}
+.contact .floor{height:56px;background:var(--green)}
+
+@media(max-width:1000px){
+  .hero h1{font-size:min(15vw,7rem);white-space:normal;line-height:1.18;text-wrap:balance}
+  .hero-text{padding-top:64px;padding-bottom:470px}
+  .spr{left:var(--mx);bottom:var(--mb);width:var(--mw)}
+  .hint{top:auto;bottom:8px}
+  .ground{height:80px}
+}
+@media(max-width:600px){
+  .hero-text{padding-top:32px;padding-bottom:380px}
+  .hint{bottom:8px;right:auto;left:0}
+  .parade img:nth-child(n+5){display:none}
+}
+@media(prefers-reduced-motion:no-preference){
+  .spr.hop img{animation:hop .6s ease-out}
+  .parade img{animation:bob 1.6s ease-in-out infinite alternate}
+  .parade img:nth-child(2n){animation-duration:1.1s}
+  .parade img:nth-child(3n){animation-delay:-.8s}
+}
+@keyframes hop{0%{transform:scale(1.12,.82) translateY(8%)}40%{transform:scale(.94,1.1) translateY(-34%)}75%{transform:scale(1.08,.9) translateY(4%)}100%{transform:none}}
