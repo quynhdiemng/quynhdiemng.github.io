@@ -39,10 +39,10 @@
   function render(box, list, lead) {
     box.replaceChildren(...list.map((p, i) => el('a', { className: lead && !i ? 'tile lead-tile' : 'tile', href: '#' + p.id },
       el('span', { className: 'shot' },
-        el('img', { src: `${A}covers/${p.id}.webp`, alt: '', loading: 'lazy' }),
+        el('img', { src: `${A}covers/${p.id}.webp?v=15`, alt: '', loading: 'lazy' }),
         ...(p.award ? [el('span', { className: 'award', textContent: p.award })] : [])),
       el('span', { className: 'cap' },
-        el('strong', {}, p.title + '\u00a0', el('i', { textContent: '↗', ariaHidden: 'true' })), el('em', { textContent: p.year }),
+        el('strong', {}, p.title + '\u00a0', el('i', { ariaHidden: 'true', innerHTML: '<svg viewBox="0 0 12 12" width=".62em" height=".62em"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' })), el('em', { textContent: p.year }),
         el('small', { textContent: p.tags.slice(0, 3).join(', ') })))));
   }
   const games = all.filter(p => p.type === 'game'), illus = all.filter(p => p.type === 'illustration');
