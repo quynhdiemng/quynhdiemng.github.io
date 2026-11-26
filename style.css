@@ -53,10 +53,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 .hero h1 .role{background:var(--accent);width:fit-content;padding:0 .14em;margin:.08em 0 0 -.06em;border-radius:.08em}
 .lead{max-width:54ch;margin-top:28px;color:var(--soft);font-size:1.08rem}
 .lead b,.about-text b{color:var(--accent-ink);font-weight:400}
-.stage{position:relative;aspect-ratio:1/.95;width:100%}
+.stage{position:relative;aspect-ratio:1/.82;width:100%}
+.stage::before{content:"";position:absolute;left:2%;right:2%;bottom:2%;height:13%;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--ink) 14%,transparent),transparent);pointer-events:none}
 .hint{position:absolute;right:0;top:0;color:var(--soft);pointer-events:none}
 .spr{position:absolute;left:var(--x);bottom:var(--b);width:var(--w);margin:0;padding:5px;border:1px dashed transparent;background:none;touch-action:none;cursor:grab;user-select:none}
 .spr img{width:100%;pointer-events:none}
+.spr::after{content:"";position:absolute;left:8%;right:8%;bottom:2px;height:9%;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--ink) 20%,transparent),transparent);z-index:-1;pointer-events:none}
+.spr{isolation:isolate}
 .spr:hover,.spr:focus-visible,.spr.on{border-color:var(--accent);outline:0;z-index:3}
 .spr.on{cursor:grabbing}
 .spr span{position:absolute;left:-1px;bottom:100%;background:var(--accent);color:var(--ink);font:400 .75rem/1 var(--mono);padding:5px 8px;white-space:nowrap;opacity:0}
@@ -242,6 +245,6 @@ body:has(dialog[open]){overflow:hidden}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 @keyframes slide{to{transform:translateX(-50%)}}
 @keyframes pulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 28%,transparent)}}
-@keyframes bob{from{transform:translateY(5px)}to{transform:translateY(-9px)}}
-@keyframes sway{from{transform:translateY(4px) rotate(-3deg)}to{transform:translateY(-6px) rotate(3deg)}}
+@keyframes bob{from{transform:translateY(2px)}to{transform:translateY(-6px)}}
+@keyframes sway{from{transform:translateY(2px) rotate(-2deg)}to{transform:translateY(-5px) rotate(2deg)}}
 @keyframes hop{0%{transform:scale(1.12,.82) translateY(8%)}40%{transform:scale(.94,1.1) translateY(-34%)}75%{transform:scale(1.08,.9) translateY(4%)}100%{transform:none}}

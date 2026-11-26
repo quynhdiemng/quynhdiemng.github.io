@@ -5,13 +5,12 @@
 
   /* ---- hero sprites: file, project, left, bottom, width (all % of the stage) ---- */
   const sprites = [
-    ['cat-angel', 'Cat Dash', '68%', '50%', '24%'],
-    ['cat-grey', 'Meow Block', '4%', '60%', '36%'],
-    ['emo-blue', 'Cat Dash', '1%', '30%', '20%'],
-    ['emo-pink', 'Cat Dash', '79%', '26%', '20%'],
-    ['cats', 'Meow Block', '19%', '14%', '60%'],
-    ['cat-orange', 'Meow Block', '67%', '0%', '25%'],
-    ['cat-yarn', 'Meow Block', '8%', '0%', '20%']];
+    // one Meow Block family on a shared floor: back row, the pile in the middle, front row (drawn in this order)
+    ['cat-grey', 'Meow Block', '0%', '34%', '30%'],
+    ['cat-white', 'Meow Block', '76%', '34%', '22%'],
+    ['cats', 'Meow Block', '21%', '8%', '58%'],
+    ['cat-yarn', 'Meow Block', '3%', '3%', '23%'],
+    ['cat-orange', 'Meow Block', '68%', '3%', '31%']];
   const stage = $('stage');
   sprites.forEach(([f, label, ...pos]) => {
     const b = el('button', { className: 'spr', type: 'button', ariaLabel: label + ' sprite, use arrow keys to move' },
@@ -70,6 +69,9 @@
 
   /* ---- project viewer, one shareable link per project (#meow-block) ---- */
   const v = $('viewer');
+  const vo = 'IntersectionObserver' in window && new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) e.target.play().catch(() => {}); else e.target.pause();
+  }), { rootMargin: '150px 0px' });
   let cur = -1, back = 0;
   function show() {
     cur = all.findIndex(p => '#' + p.id === location.hash);
@@ -81,9 +83,13 @@
     const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
     const item = ([f, w, h, alpha]) => {
       const src = `${A}projects/${f}`;
-      return f.endsWith('.mp4')
-        ? el('video', { src, width: w, height: h, muted: true, loop: true, autoplay: !still, controls: still, playsInline: true })
-        : el('img', { width: w, height: h, alt: `${p.title} artwork`, loading: 'lazy', src, className: alpha ? 'alpha' : '' });
+      if (f.endsWith('.mp4')) {
+        // play only while on screen, so a project with many clips stays light
+        const n = el('video', { src, width: w, height: h, muted: true, loop: true, controls: still, playsInline: true, preload: 'metadata' });
+        if (!still) { if (vo) vo.observe(n); else n.autoplay = true; }
+        return n;
+      }
+      return el('img', { width: w, height: h, alt: `${p.title} artwork`, loading: 'lazy', src, className: alpha ? 'alpha' : '' });
     };
     let m;
     if (p.sections) {

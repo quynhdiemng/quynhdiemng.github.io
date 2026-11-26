@@ -103,6 +103,24 @@ const PROJECTS = [
     ],
   },
   {
+    id: "motion",
+    type: "game",
+    year: 2025,
+    period: "2024–2025",
+    title: "Spine 2D & Unity Motion",
+    tags: ["Animation", "Game UI", "Props"],
+    role: "Spine 2D animation, Unity VFX",
+    genre: "Motion for mobile games",
+    desc: "Character, prop, world map and popup animations rigged in Spine 2D, plus shop and character effects set up in Unity.",
+    sections: [
+      ["Characters", [[["motion/m01.mp4", 1280, 720], ["motion/m02.mp4", 638, 638]]]],
+      ["Props and obstacles", [[["motion/m03.mp4", 416, 328], ["motion/m04.mp4", 300, 270], ["motion/m05.mp4", 530, 1000]], [["motion/m06.mp4", 1280, 590], ["motion/m07.mp4", 1280, 590]]]],
+      ["World maps and popups", [[["motion/m09.mp4", 1280, 590]], [["motion/m10.mp4", 1170, 540], ["motion/m11.mp4", 1170, 540]], [["motion/m12.mp4", 1000, 750], ["motion/m13.mp4", 1000, 750]], [["motion/m08.mp4", 1280, 646]]]],
+      ["Splash screen", [[["motion/m14.mp4", 1280, 716]]]],
+      ["Unity VFX", [[["motion/m15.mp4", 1280, 822], ["motion/m16.mp4", 1280, 732]]]],
+    ],
+  },
+  {
     id: "cat-dash",
     type: "game",
     year: 2024,
@@ -224,6 +242,7 @@ const PROJECTS = [
       ["fantasy-card-game/08.mp4", 1200, 848],
       ["fantasy-card-game/09.mp4", 1200, 848],
       ["fantasy-card-game/10.webp", 1200, 629],
+      ["fantasy-card-game/11.webp", 1200, 492],
     ],
   },
   {
