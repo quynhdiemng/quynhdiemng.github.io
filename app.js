@@ -5,10 +5,10 @@
 
   /* ---- hero sprites: file, project, left, bottom, width (all % of the stage) ---- */
   const sprites = [
-    ['cubes', 'Color Toy Block', '56%', '62%', '40%'],
+    ['cat-angel', 'Cat Dash', '68%', '50%', '24%'],
     ['cat-grey', 'Meow Block', '4%', '60%', '36%'],
-    ['drop-blue', 'Water Match Factory', '-2%', '22%', '28%'],
-    ['drop-pink', 'Water Match Factory', '76%', '20%', '26%'],
+    ['emo-blue', 'Cat Dash', '1%', '30%', '20%'],
+    ['emo-pink', 'Cat Dash', '79%', '26%', '20%'],
     ['cats', 'Meow Block', '19%', '14%', '60%'],
     ['cat-orange', 'Meow Block', '67%', '0%', '25%'],
     ['cat-yarn', 'Meow Block', '8%', '0%', '20%']];
@@ -39,7 +39,7 @@
   function render(box, list, lead) {
     box.replaceChildren(...list.map((p, i) => el('a', { className: lead && !i ? 'tile lead-tile' : 'tile', href: '#' + p.id },
       el('span', { className: 'shot' },
-        el('img', { src: `${A}covers/${p.id}.webp?v=15`, alt: '', loading: 'lazy' }),
+        el('img', { src: `${A}covers/${p.id}.webp?v=16`, alt: '', loading: 'lazy' }),
         ...(p.award ? [el('span', { className: 'award', textContent: p.award })] : [])),
       el('span', { className: 'cap' },
         el('strong', {}, p.title + '\u00a0', el('i', { ariaHidden: 'true', innerHTML: '<svg viewBox="0 0 12 12" width=".62em" height=".62em"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' })), el('em', { textContent: p.year }),
