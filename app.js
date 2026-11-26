@@ -79,15 +79,22 @@
     [['Year', p.period], ['Type', p.tags.join(', ')], ['Role', p.role], ['Genre', p.genre], ['Award', p.award]]
       .filter(x => x[1]).forEach(([k, t]) => dl.append(el('div', {}, el('dt', { textContent: k }), el('dd', { textContent: t }))));
     const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
-    const m = el('div', { className: 'media ' + (p.layout || '') });
-    p.media.forEach(([f, w, h]) => {
+    const item = ([f, w, h, alpha]) => {
       const src = `${A}projects/${f}`;
-      const n = f.endsWith('.mp4')
+      return f.endsWith('.mp4')
         ? el('video', { src, width: w, height: h, muted: true, loop: true, autoplay: !still, controls: still, playsInline: true })
-        : el('img', { width: w, height: h, alt: `${p.title} artwork`, loading: 'lazy', src });
-      if (w > h) n.className = 'wide';
-      m.append(n);
-    });
+        : el('img', { width: w, height: h, alt: `${p.title} artwork`, loading: 'lazy', src, className: alpha ? 'alpha' : '' });
+    };
+    let m;
+    if (p.sections) {
+      // each row is one height; an item's share of the width is its width/height
+      m = el('div', {}, ...p.sections.map(([t, rows], i) => el('section', { className: 'sec' },
+        ...(t ? [el('h3', {}, el('span', { textContent: String(i + 1).padStart(2, '0') }), t)] : []),
+        ...rows.map(r => el('div', { className: 'row' }, ...r.map(x => { const n = item(x), r = x[1] / x[2]; n.style.setProperty('--a', r.toFixed(3)); if (r < 1.2) n.classList.add(r < .6 ? 'tall' : 'mid'); return n; }))))));
+    } else {
+      m = el('div', { className: 'media ' + (p.layout || '') });
+      p.media.forEach(x => { const n = item(x); if (x[1] > x[2]) n.classList.add('wide'); m.append(n); });
+    }
     $('vBody').replaceChildren(el('h2', { id: 'vTitle', textContent: p.title }), el('p', { className: 'desc', textContent: p.desc }), dl, m,
       el('button', { type: 'button', className: 'v-next', onclick: () => go(1) }, el('span', { className: 'mono', textContent: 'Next project' }), all[(cur + 1) % all.length].title + ' →'));
     if (!v.open) { back = scrollY; v.showModal(); }

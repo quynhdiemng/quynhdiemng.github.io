@@ -1,5 +1,6 @@
 // Add a project: copy one block, change the text, put the cover in assets/covers/<id>.webp
 // and the artwork in assets/projects/<id>/. media = [file, width, height].
+// Or sections = [[label, [[row of files], ...]], ...]: each row is shown at one height.
 // type: 'game' or 'illustration'. Newest year is shown first automatically.
 const PROJECTS = [
   {
@@ -65,8 +66,10 @@ const PROJECTS = [
     role: "Main artist",
     genre: "Match-3",
     desc: "I designed the main characters from a water drop, with a cute look and a simple body structure, and explored several concepts before the final design.",
-    media: [
-      ["water-match-factory/01.webp", 1600, 2265],
+    sections: [
+      ["Characters", [[["water-match-factory/s01.webp", 229, 381, 1], ["water-match-factory/s02.webp", 255, 395, 1], ["water-match-factory/s03.webp", 211, 357, 1], ["water-match-factory/s04.webp", 219, 309, 1]]]],
+      ["Home screens", [[["water-match-factory/s05.webp", 640, 1138], ["water-match-factory/s06.webp", 640, 1138], ["water-match-factory/s07.webp", 640, 1138], ["water-match-factory/s08.webp", 640, 1138]]]],
+      ["Gameplay and popups", [[["water-match-factory/s09.webp", 640, 1138], ["water-match-factory/s10.webp", 640, 1138], ["water-match-factory/s11.webp", 640, 1138], ["water-match-factory/s12.webp", 640, 1138]], [["water-match-factory/s13.webp", 640, 1138], ["water-match-factory/s14.webp", 640, 1138], ["water-match-factory/s15.webp", 640, 1138], ["water-match-factory/s16.webp", 640, 800]]]],
     ],
   },
   {
@@ -78,11 +81,11 @@ const PROJECTS = [
     tags: ["Character", "Background", "Game UI"],
     genre: "Puzzle / Casual",
     desc: "New game work from 2026.",
-    media: [
-      ["new-game-2026/01.webp", 1600, 1813],
-      ["new-game-2026/02.webp", 1600, 1813],
-      ["new-game-2026/03.webp", 1600, 1813],
-      ["new-game-2026/04.webp", 1600, 1814],
+    sections: [
+      ["", [[["new-game-2026/s01.webp", 640, 1138], ["new-game-2026/s02.webp", 640, 1138], ["new-game-2026/s03.webp", 640, 1138]], [["new-game-2026/s04.webp", 640, 1285], ["new-game-2026/s05.webp", 640, 1285]]]],
+      ["", [[["new-game-2026/s06.webp", 1600, 739]], [["new-game-2026/s07.webp", 1600, 739]], [["new-game-2026/s08.webp", 1600, 739], ["new-game-2026/s09.webp", 1600, 739]]]],
+      ["", [[["new-game-2026/s10.webp", 640, 1138], ["new-game-2026/s11.webp", 640, 1138], ["new-game-2026/s12.webp", 640, 1138]]]],
+      ["", [[["new-game-2026/s13.webp", 640, 1386], ["new-game-2026/s14.webp", 640, 1386], ["new-game-2026/s15.webp", 640, 1386], ["new-game-2026/s16.webp", 640, 1386]]]],
     ],
   },
   {
@@ -94,10 +97,9 @@ const PROJECTS = [
     tags: ["Game UI", "Props"],
     genre: "Hyper-casual music",
     desc: "Players tap and swipe piano tiles moving down the screen. I designed the UI and learned basic 3D software to support the in-game bundle packages.",
-    media: [
-      ["beat-drum/01.webp", 1600, 1577],
-      ["beat-drum/02.webp", 1600, 1578],
-      ["beat-drum/03.webp", 1600, 1578],
+    sections: [
+      ["", [[["beat-drum/s01.webp", 1600, 742]]]],
+      ["Screens", [[["beat-drum/s02.webp", 640, 1387], ["beat-drum/s03.webp", 640, 1387], ["beat-drum/s04.webp", 640, 1387], ["beat-drum/s05.webp", 640, 1387], ["beat-drum/s06.webp", 640, 1387]], [["beat-drum/s07.webp", 640, 1387], ["beat-drum/s08.webp", 640, 1387], ["beat-drum/s09.webp", 640, 1387], ["beat-drum/s10.webp", 640, 1387], ["beat-drum/s11.webp", 640, 1387]], [["beat-drum/s12.webp", 640, 1387], ["beat-drum/s13.webp", 640, 1387], ["beat-drum/s14.webp", 640, 1387], ["beat-drum/s15.webp", 640, 1387], ["beat-drum/s16.webp", 640, 1387]], [["beat-drum/s17.webp", 640, 1387], ["beat-drum/s18.webp", 640, 1387], ["beat-drum/s19.webp", 640, 1387], ["beat-drum/s20.webp", 640, 1387], ["beat-drum/s21.webp", 640, 1387]]]],
     ],
   },
   {
@@ -109,21 +111,12 @@ const PROJECTS = [
     tags: ["Character", "Background", "Animation", "Props", "Game UI", "UA & store art", "Concept"],
     genre: "Rhythm platformer",
     desc: "I created the initial concept for this rhythm-based platform game, then designed the UI, backgrounds and UA assets such as the logo and app icon. I learned and developed my animation skills on this project.",
-    media: [
-      ["cat-dash/01.webp", 1600, 1894],
-      ["cat-dash/02.webp", 1600, 1894],
-      ["cat-dash/03.webp", 1600, 1894],
-      ["cat-dash/04.mp4", 1200, 2246],
-      ["cat-dash/05.webp", 1400, 1920],
-      ["cat-dash/06.mp4", 1200, 822],
-      ["cat-dash/07.mp4", 1200, 1646],
-      ["cat-dash/08.webp", 1400, 1920],
-      ["cat-dash/09.webp", 1400, 1920],
-      ["cat-dash/10.webp", 1400, 1920],
-      ["cat-dash/11.webp", 1400, 1920],
-      ["cat-dash/12.webp", 1400, 1920],
-      ["cat-dash/13.webp", 1400, 1920],
-      ["cat-dash/14.mp4", 1200, 1818],
+    sections: [
+      ["Backgrounds", [[["cat-dash/s01.webp", 1600, 985], ["cat-dash/s02.webp", 1600, 985]], [["cat-dash/s03.webp", 1600, 1313]], [["cat-dash/s04.webp", 1600, 656], ["cat-dash/s05.webp", 1600, 738]], [["cat-dash/s06.webp", 1600, 427]], [["cat-dash/s07.webp", 1600, 360]], [["cat-dash/s08.webp", 1600, 220]]]],
+      ["Gameplay", [[["cat-dash/s09.webp", 1600, 738], ["cat-dash/s10.webp", 1600, 738]]]],
+      ["Social and UA art", [[["cat-dash/s11.webp", 1200, 676], ["cat-dash/s12.webp", 1200, 676], ["cat-dash/s13.webp", 1200, 676]], [["cat-dash/s14.webp", 1200, 676], ["cat-dash/s15.webp", 1200, 676]], [["cat-dash/s16.webp", 1024, 500], ["cat-dash/s17.webp", 1200, 620]]]],
+      ["Characters and logo", [[["cat-dash/s18.webp", 1600, 1258], ["cat-dash/s19.webp", 1000, 1000]], [["cat-dash/s20.webp", 1557, 856]], [["cat-dash/s21.webp", 900, 900], ["cat-dash/s22.webp", 640, 960]]]],
+      ["Process and assets", [[["cat-dash/05.webp", 1400, 1920], ["cat-dash/08.webp", 1400, 1920], ["cat-dash/09.webp", 1400, 1920]], [["cat-dash/10.webp", 1400, 1920], ["cat-dash/11.webp", 1400, 1920], ["cat-dash/12.webp", 1400, 1920]], [["cat-dash/13.webp", 1400, 1920], ["cat-dash/04.mp4", 1200, 2246]], [["cat-dash/06.mp4", 1200, 822]], [["cat-dash/07.mp4", 1200, 1646], ["cat-dash/14.mp4", 1200, 1818]]]],
     ],
   },
   {
@@ -135,11 +128,11 @@ const PROJECTS = [
     tags: ["Game UI", "Concept"],
     genre: "Puzzle",
     desc: "UI and game concept for a project developed in collaboration with an investor.",
-    media: [
-      ["match-factory/01.webp", 1600, 1898],
-      ["match-factory/02.webp", 1600, 1899],
-      ["match-factory/03.webp", 1600, 1899],
-      ["match-factory/04.webp", 1600, 1899],
+    sections: [
+      ["Gameplay and home", [[["match-factory/s01.webp", 640, 1280], ["match-factory/s02.webp", 640, 1280], ["match-factory/s03.webp", 640, 1280], ["match-factory/s04.webp", 640, 1280], ["match-factory/s05.webp", 640, 1280]]]],
+      ["Events", [[["match-factory/s06.webp", 640, 1280], ["match-factory/s07.webp", 640, 1280], ["match-factory/s08.webp", 640, 1280], ["match-factory/s09.webp", 640, 1280], ["match-factory/s10.webp", 640, 1280]], [["match-factory/s11.webp", 640, 1280], ["match-factory/s12.webp", 640, 1280], ["match-factory/s13.webp", 640, 1280], ["match-factory/s14.webp", 640, 1280], ["match-factory/s15.webp", 640, 1280]]]],
+      ["Shop and rewards", [[["match-factory/s16.webp", 640, 1280], ["match-factory/s17.webp", 640, 1280], ["match-factory/s18.webp", 640, 1280], ["match-factory/s19.webp", 640, 1280], ["match-factory/s20.webp", 640, 1280]]]],
+      ["Profile, teams and settings", [[["match-factory/s21.webp", 640, 1280], ["match-factory/s22.webp", 640, 1280], ["match-factory/s23.webp", 640, 1280], ["match-factory/s24.webp", 640, 1280]], [["match-factory/s25.webp", 640, 1280], ["match-factory/s26.webp", 640, 1280], ["match-factory/s27.webp", 640, 1280]]]],
     ],
   },
   {
@@ -152,12 +145,8 @@ const PROJECTS = [
     role: "Personal project",
     genre: "Isometric farm",
     desc: "Created during the Mobile Game UX/UI course at Art Soup. I practiced user flows, UI screens, buttons, icons and visual elements for a casual mobile game.",
-    media: [
-      ["riverside-farm/01.webp", 1600, 1653],
-      ["riverside-farm/02.webp", 1600, 1653],
-      ["riverside-farm/03.webp", 1600, 1654],
-      ["riverside-farm/04.webp", 1600, 1653],
-      ["riverside-farm/05.webp", 1600, 1654],
+    sections: [
+      ["", [[["riverside-farm/s01.webp", 1600, 1131]], [["riverside-farm/s02.webp", 1600, 1131], ["riverside-farm/s03.webp", 1600, 1131]], [["riverside-farm/s04.webp", 1600, 1131], ["riverside-farm/s05.webp", 1600, 1131]], [["riverside-farm/s06.webp", 1600, 1131], ["riverside-farm/s07.webp", 1600, 1131]], [["riverside-farm/s08.webp", 1600, 1131]]]],
     ],
   },
   {
