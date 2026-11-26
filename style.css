@@ -1,12 +1,13 @@
 :root{
   --bg:#EBEFE0; --rasp:#EC3460; --cotton:#FFCDF2; /* palette: cream (main), raspberry, cotton */
-  --ink:color-mix(in srgb,var(--rasp) 30%,#000); /* deep raspberry for text */
+  /* strictly three colours: no mixes, no extra tints */
+  --ink:var(--rasp);
   --accent:var(--rasp);
-  --accent-ink:color-mix(in srgb,var(--rasp) 72%,var(--ink)); /* raspberry dark enough for small text */
-  --deep:color-mix(in srgb,var(--bg) 86%,var(--rasp));
-  --panel:color-mix(in srgb,var(--bg) 55%,var(--cotton));
-  --line:color-mix(in srgb,var(--bg) 78%,var(--ink));
-  --soft:color-mix(in srgb,var(--ink) 76%,var(--bg));
+  --accent-ink:var(--rasp);
+  --deep:var(--cotton);
+  --panel:var(--cotton);
+  --line:var(--rasp);
+  --soft:var(--rasp);
   --display:"Fraunces",Georgia,serif;
   --body:"Be Vietnam Pro",system-ui,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,monospace;
@@ -15,7 +16,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:72px;color-scheme:light;background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.65 var(--body)}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 1.06rem/1.65 var(--body)}
 img,video{display:block;max-width:100%}
 h1,h2,h3,h4,p,ul,dl,dd,figure{margin:0}
 h1,h2,h3,h4{font-family:var(--display);font-weight:800;font-variation-settings:"SOFT" 100,"WONK" 0;line-height:1.06;letter-spacing:-.02em;text-wrap:balance}
@@ -26,11 +27,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .wrap{max-width:1400px;margin-inline:auto;padding-inline:var(--gutter)}
 .skip{position:absolute;left:-999px}
 .skip:focus{left:8px;top:8px;z-index:9;background:var(--ink);color:var(--bg);padding:8px}
-.mono,.facts dt{font:400 .78rem/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.mono,.facts dt{font:400 .84rem/1.5 var(--mono);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
 .kicker{color:var(--accent-ink);margin-bottom:22px}
 
 /* top bar */
-.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
 .bar .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;min-height:72px}
 .bar a{text-decoration:none}
 .brand{font:800 1.08rem/1 var(--display);display:flex;align-items:center;gap:10px;white-space:nowrap}
@@ -45,14 +46,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* hero */
 .hero{position:relative;overflow:hidden;padding-block:clamp(48px,6vw,88px) clamp(56px,6vw,88px)}
-.hero::before{content:"";position:absolute;width:900px;height:900px;left:var(--gx,72%);top:var(--gy,34%);translate:-50% -50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--cotton) 75%,transparent),transparent);pointer-events:none}
 .hero .wrap{position:relative}
 .hero-in{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:center}
 .hero h1{font-size:clamp(2.9rem,6.3vw,5.9rem);line-height:1.12;letter-spacing:-.025em;font-weight:900}
 .hero h1 span{display:block;white-space:nowrap}
 .hero h1 .role{color:var(--accent)}
 .lead{max-width:54ch;margin-top:28px;color:var(--soft);font-size:1.08rem}
-.lead b,.about-text b{color:var(--ink);font-weight:600;background:linear-gradient(transparent 58%,var(--cotton) 0)}
+.lead b,.about-text b{color:var(--ink);font-weight:700;background:linear-gradient(transparent 58%,var(--cotton) 0)}
 .stage{position:relative;aspect-ratio:1/.95;width:100%}
 .hint{position:absolute;right:0;top:0;color:var(--soft);pointer-events:none}
 .spr{position:absolute;left:var(--x);bottom:var(--b);width:var(--w);margin:0;padding:5px;border:1px dashed transparent;background:none;touch-action:none;cursor:grab;user-select:none}
@@ -100,7 +100,7 @@ h2{font-size:clamp(2.4rem,5.2vw,4.7rem)}
 .cap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:start;padding:18px 18px 20px}
 .cap strong{font:800 1.2rem/1.25 var(--display);letter-spacing:0}
 .cap em{font:400 .78rem/1 var(--mono);border:1px solid var(--line);border-radius:4px;padding:5px 7px;transition:color .2s,border-color .2s}
-.cap small{grid-column:1/-1;font:400 .78rem/1.4 var(--mono);color:var(--soft)}
+.cap small{grid-column:1/-1;font:600 .82rem/1.4 var(--mono);color:var(--soft)}
 .tile:hover,.tile:focus-visible{background:var(--panel);z-index:1;outline:2px solid var(--accent)}
 .tile:hover .shot img{transform:scale(1.06)}
 .tile:hover em{color:var(--accent-ink);border-color:var(--accent-ink)}
@@ -129,7 +129,7 @@ h2{font-size:clamp(2.4rem,5.2vw,4.7rem)}
 .job li::marker{color:var(--accent)}
 
 /* contact */
-.contact{--line:color-mix(in srgb,var(--cotton) 72%,var(--rasp));--soft:color-mix(in srgb,var(--ink) 80%,var(--cotton));position:relative;overflow:hidden;background:var(--cotton);margin-top:clamp(80px,9vw,136px);padding-top:clamp(72px,8vw,120px)}
+.contact{position:relative;overflow:hidden;background:var(--cotton);margin-top:clamp(80px,9vw,136px);padding-top:clamp(72px,8vw,120px)}
 .contact .wrap{position:relative}
 .mail{display:inline-block;font:900 min(6.6vw,5.6rem)/1.15 var(--display);letter-spacing:-.025em;text-decoration:none;transition:color .25s}
 .mail span{color:var(--accent)}
@@ -164,7 +164,7 @@ dialog::backdrop{background:var(--deep)}
 .row{display:flex;gap:14px}
 .row+.row{margin-top:14px}
 .row>*{flex:var(--a) 1 0;min-width:0;width:100%;height:auto;border-radius:6px;background:var(--deep)}
-.row>.alpha{background:color-mix(in srgb,var(--bg) 45%,var(--cotton));padding:5% 7%;object-fit:contain}
+.row>.alpha{background:var(--cotton);padding:5% 7%;object-fit:contain}
 body:has(dialog[open]){overflow:hidden}
 
 .hint .t{display:none}
@@ -230,15 +230,14 @@ body:has(dialog[open]){overflow:hidden}
   .marquee div{animation:slide 45s linear infinite}
   .marquee:hover div{animation-play-state:paused}
   .brand::before{animation:pulse 2.2s ease-in-out infinite}
-  .hero::before{transition:left .8s var(--ease),top .8s var(--ease)}
-  .spr img{animation:bob 3.4s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+    .spr img{animation:bob 3.4s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
   .spr:nth-of-type(even) img{animation-name:sway}
   .spr:hover img,.spr.on img{animation-play-state:paused}
   .spr.hop img{animation:hop .6s ease-out}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 @keyframes slide{to{transform:translateX(-50%)}}
-@keyframes pulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 28%,transparent)}}
+@keyframes pulse{50%{box-shadow:0 0 0 5px var(--cotton)}}
 @keyframes bob{from{transform:translateY(5px)}to{transform:translateY(-9px)}}
 @keyframes sway{from{transform:translateY(4px) rotate(-3deg)}to{transform:translateY(-6px) rotate(3deg)}}
 @keyframes hop{0%{transform:scale(1.12,.82) translateY(8%)}40%{transform:scale(.94,1.1) translateY(-34%)}75%{transform:scale(1.08,.9) translateY(4%)}100%{transform:none}}
