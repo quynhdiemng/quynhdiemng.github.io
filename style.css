@@ -111,12 +111,12 @@ h2{font-size:clamp(2.4rem,5.2vw,4.7rem)}
 .about-text img{border-radius:8px;width:100%;height:auto}
 .about-text .big{font:700 clamp(1.3rem,1.9vw,1.65rem)/1.35 var(--display);letter-spacing:0}
 .about-text p+p{margin-top:16px;color:var(--soft)}
-.kit{background:var(--panel);border:1px solid var(--line)}
+.kit{background:var(--bg);border:1px solid var(--line)}
 .kit div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:20px 22px}
 .kit div+div{border-top:1px solid var(--line)}
 .kit dt{color:var(--soft);padding-top:5px}
 .kit dd{display:flex;flex-wrap:wrap;gap:7px}
-.kit dd span{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:5px 11px;font-size:.9rem}
+.kit dd span{background:var(--cotton);border:1px solid var(--line);border-radius:4px;padding:5px 11px;font-size:.9rem}
 
 /* experience */
 .job{display:grid;grid-template-columns:160px minmax(0,1.1fr) minmax(0,1.2fr);gap:8px 32px;padding-block:30px;border-top:1px solid var(--line);transition:background-color .25s}
