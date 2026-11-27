@@ -113,7 +113,7 @@ h2{font-size:clamp(2.4rem,5.2vw,4.7rem)}
 /* about */
 .about-in{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:start}
 .about-text{display:grid;grid-template-columns:230px minmax(0,1fr);gap:20px 28px;align-items:start}
-.about-text img{border-radius:14px;width:calc(100% - 12px);height:auto;aspect-ratio:4/5;object-fit:cover;box-shadow:12px 12px 0 var(--green)}
+.about-text img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;background:var(--deep);outline:1px solid var(--line)}
 .about-text .big{font:700 clamp(1.3rem,1.9vw,1.65rem)/1.35 var(--display);letter-spacing:0}
 .about-text p+p{margin-top:16px;color:var(--soft)}
 .kit{background:var(--bg);border:1px solid var(--line)}
