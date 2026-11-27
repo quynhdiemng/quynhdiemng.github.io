@@ -215,8 +215,8 @@ body:has(dialog[open]){overflow:hidden}
   .bar nav{grid-row:2;grid-column:1/-1;justify-content:space-between}
   .cells>div{padding:18px 16px}
   .cells big{font-size:1.7rem}
-  .cells.three,.cells.edu{grid-template-columns:minmax(0,1fr)}
-  .cells.three>div+div,.cells.edu>div+div{border-top:1px solid var(--line)}
+  .cells.three,.cells.four,.cells.edu{grid-template-columns:minmax(0,1fr)}
+  .cells.three>div+div,.cells.four>div+div,.cells.edu>div+div{border-top:1px solid var(--line)}
   #gameList{grid-template-columns:minmax(0,1fr)}
   .cap{padding:13px 12px 15px;grid-template-columns:minmax(0,1fr)}
   .cap strong{font-size:1rem}
