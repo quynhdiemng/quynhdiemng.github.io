@@ -2,6 +2,11 @@
 // and the artwork in assets/projects/<id>/. media = [file, width, height].
 // Or sections = [[label, [[row of files], ...]], ...]: each row is shown at one height.
 // type: 'game' or 'illustration'. Newest year is shown first automatically.
+// crop(files, sheetW, sheetH, x, y, w, h) shows one part of tall sheets that are stacked
+// top to bottom (x, y in pixels of that stack), so a poster can be split into sections.
+// null in a row is an empty slot, so a single phone screen is not shown full width.
+// (Meow Block and Color Toy Block now use pieces cut from the Figma frames: meow-block/c01.webp…)
+const crop = (files, fw, fh, x, y, w, h) => [files[0], w, h, 0, { files, fw, fh, x, y }];
 const PROJECTS = [
   {
     id: "oil-defense",
@@ -14,14 +19,15 @@ const PROJECTS = [
     genre: "Tower defense",
     award: "2nd place, Game Jam 2026",
     desc: "Made for the company Game Jam 2026. I worked on the game design and led the art direction: level ideas, UI, weapon items, backgrounds and visual direction. The logo was generated with AI; every other asset was illustrated by hand.",
+    links: [["Play on itch.io", "https://weedlly.itch.io/oil-keeper-td"]],
     media: [
-      ["oil-defense/01.webp", 1600, 902],
-      ["oil-defense/02.webp", 1600, 1948],
-      ["oil-defense/03.webp", 1600, 1949],
-      ["oil-defense/04.webp", 1600, 1948],
-      ["oil-defense/05.webp", 1600, 1949],
-      ["oil-defense/06.webp", 1600, 1948],
-      ["oil-defense/07.webp", 1600, 1949],
+      ["oil-defense/01.webp", 1921, 1083],
+      ["oil-defense/02.webp", 1915, 2332],
+      ["oil-defense/03.webp", 1921, 2340],
+      ["oil-defense/04.webp", 1921, 2339],
+      ["oil-defense/05.webp", 1921, 2340],
+      ["oil-defense/06.webp", 1921, 2338],
+      ["oil-defense/07.webp", 1910, 2326],
     ],
   },
   {
@@ -34,10 +40,13 @@ const PROJECTS = [
     role: "Main UX/UI, background and concept artist",
     genre: "Puzzle / Casual",
     desc: "A cute puzzle built from cat-shaped blocks. I worked on block characters, UI screens, buttons, icons, backgrounds, loading screens and UA/store assets, with simple shapes, soft colors and readable mobile layouts.",
-    media: [
-      ["meow-block/01.webp", 1600, 1729],
-      ["meow-block/02.webp", 1600, 1729],
-      ["meow-block/03.webp", 1600, 1729],
+    links: [["Google Play", "https://play.google.com/store/apps/details?id=lg.cat.block.jam.slide.box.puzzle"], ["App Store", "https://apps.apple.com/us/app/meow-block-cat-sort-puzzle/id6754963808"]],
+    sections: [
+      ["Overview", [[["meow-block/c01.webp", 2400, 2070]]]],
+      ["Game UI", [[["meow-block/c02.webp", 2400, 3327]]]],
+      ["Fake screens", [[["meow-block/c03.webp", 687, 1222], ["meow-block/c04.webp", 687, 1222], ["meow-block/c05.webp", 687, 1225],
+        ["meow-block/c06.webp", 696, 1239], ["meow-block/c07.webp", 696, 1239], ["meow-block/c08.webp", 696, 1239]]]],
+      ["UA creatives", [[["meow-block/c09.webp", 1395, 728], ["meow-block/c10.webp", 1398, 1743]], [["meow-block/c11.webp", 2400, 625]]]],
     ],
   },
   {
@@ -50,10 +59,16 @@ const PROJECTS = [
     role: "Main UX/UI, background and concept artist",
     genre: "Color sort / Puzzle",
     desc: "Players organize blocks by color. I designed UI screens, gameplay backgrounds, icons and ad creatives, and painted 2D blocks with a natural 3D look.",
-    media: [
-      ["color-toy-block/01.webp", 1600, 2069],
-      ["color-toy-block/02.webp", 1600, 2069],
-      ["color-toy-block/03.webp", 1600, 2069],
+    links: [["Google Play", "https://play.google.com/store/apps/details?id=lg.color.block.sort.jam.wood.brick.puzzle"], ["App Store", "https://apps.apple.com/us/app/block-sort-color-match-puzzle/id6757590824"]],
+    sections: [
+      ["Overview", [[["color-toy-block/c01.webp", 2400, 2010]]]],
+      ["Game UI", [[["color-toy-block/c02.webp", 2400, 3306]]]],
+      ["Fake screens", [[["color-toy-block/c03.webp", 689, 1227], ["color-toy-block/c04.webp", 692, 1227], ["color-toy-block/c05.webp", 689, 1225],
+        ["color-toy-block/c06.webp", 696, 1239], ["color-toy-block/c07.webp", 696, 1239]]]],
+      ["Fake screens: gameplay concepts", [[["color-toy-block/c08.webp", 843, 1502], ["color-toy-block/c09.webp", 845, 1502], ["color-toy-block/c10.webp", 845, 1502], ["color-toy-block/c11.webp", 843, 1502]],
+        [["color-toy-block/c12.webp", 843, 1502], ["color-toy-block/c13.webp", 845, 1502], ["color-toy-block/c14.webp", 845, 1502], ["color-toy-block/c15.webp", 843, 1505]]],
+        { note: "Early gameplay concepts that tried different layouts, visual hierarchy and board presentation. They compared readability, board space, button placement and casual appeal before the final direction was chosen." }],
+      ["UA creatives", [[["color-toy-block/c16.webp", 1393, 731], ["color-toy-block/c17.webp", 1393, 1741], ["color-toy-block/c18.webp", 699, 1239]]]],
     ],
   },
   {
@@ -66,10 +81,12 @@ const PROJECTS = [
     role: "Main artist",
     genre: "Match-3",
     desc: "I designed the main characters from a water drop, with a cute look and a simple body structure, and explored several concepts before the final design.",
+    links: [["App Store", "https://apps.apple.com/us/app/color-sort-water/id6761710087"]],
     sections: [
-      ["Characters", [[["water-match-factory/s01.webp", 229, 381, 1], ["water-match-factory/s02.webp", 255, 395, 1], ["water-match-factory/s03.webp", 211, 357, 1], ["water-match-factory/s04.webp", 219, 309, 1]]]],
-      ["Home screens", [[["water-match-factory/s05.webp", 640, 1138], ["water-match-factory/s06.webp", 640, 1138], ["water-match-factory/s07.webp", 640, 1138], ["water-match-factory/s08.webp", 640, 1138]]]],
-      ["Gameplay and popups", [[["water-match-factory/s09.webp", 640, 1138], ["water-match-factory/s10.webp", 640, 1138], ["water-match-factory/s11.webp", 640, 1138], ["water-match-factory/s12.webp", 640, 1138]], [["water-match-factory/s13.webp", 640, 1138], ["water-match-factory/s14.webp", 640, 1138], ["water-match-factory/s15.webp", 640, 1138], ["water-match-factory/s16.webp", 640, 800]]]],
+      ["Overview", [[["water-match-factory/s01.webp", 229, 381, 1], ["water-match-factory/s02.webp", 255, 395, 1], ["water-match-factory/s03.webp", 211, 357, 1], ["water-match-factory/s04.webp", 219, 309, 1]]]],
+      ["Game UI", [[["water-match-factory/s11.webp", 685, 1217], [null, 640, 1138], [null, 640, 1138], [null, 640, 1138]]]],
+      ["Fake screens", [[["water-match-factory/s05.webp", 685, 1217], ["water-match-factory/s06.webp", 693, 1232], ["water-match-factory/s07.webp", 694, 1233], ["water-match-factory/s08.webp", 694, 1233]], [["water-match-factory/s09.webp", 690, 1227], ["water-match-factory/s10.webp", 692, 1230], ["water-match-factory/s13.webp", 700, 1244], ["water-match-factory/s14.webp", 696, 1237]], [["water-match-factory/s15.webp", 700, 1244], [null, 640, 1138], [null, 640, 1138], [null, 640, 1138]]]],
+      ["UA creatives", [[["water-match-factory/s12.webp", 640, 1138], ["water-match-factory/s16.webp", 1395, 1744], [null, 640, 1138], [null, 640, 1138]]]],
     ],
   },
   {
@@ -82,10 +99,13 @@ const PROJECTS = [
     genre: "Puzzle / Casual",
     desc: "New game work from 2026.",
     sections: [
-      ["", [[["new-game-2026/s01.webp", 640, 1138], ["new-game-2026/s02.webp", 640, 1138], ["new-game-2026/s03.webp", 640, 1138]], [["new-game-2026/s04.webp", 640, 1285], ["new-game-2026/s05.webp", 640, 1285]]]],
-      ["", [[["new-game-2026/s06.webp", 1600, 739]], [["new-game-2026/s07.webp", 1600, 739]], [["new-game-2026/s08.webp", 1600, 739], ["new-game-2026/s09.webp", 1600, 739]]]],
-      ["", [[["new-game-2026/s10.webp", 640, 1138], ["new-game-2026/s11.webp", 640, 1138], ["new-game-2026/s12.webp", 640, 1138]]]],
-      ["", [[["new-game-2026/s13.webp", 640, 1386], ["new-game-2026/s14.webp", 640, 1386], ["new-game-2026/s15.webp", 640, 1386], ["new-game-2026/s16.webp", 640, 1386]]]],
+      ["Icon Match: Sort Categories", [[["new-game-2026/s01.webp", 1078, 1916], ["new-game-2026/s02.webp", 1078, 1916], ["new-game-2026/s03.webp", 1078, 1916]]],
+        { links: [["Google Play", "https://play.google.com/store/apps/details?id=lg.iconmatch.word.brain.game"]] }],
+      ["Sizzle Master: BBQ Jam Sort!", [[["new-game-2026/s10.webp", 1078, 1916], ["new-game-2026/s11.webp", 1078, 1916], ["new-game-2026/s12.webp", 1083, 1925]]],
+        { links: [["Google Play", "https://play.google.com/store/apps/details?id=lg.skewer.sizzle.cooking.puzzle"]] }],
+      ["", [[["new-game-2026/s04.webp", 1242, 2494], ["new-game-2026/s05.webp", 1242, 2494]]]],
+      ["", [[["new-game-2026/s06.webp", 2400, 1109]], [["new-game-2026/s07.webp", 2400, 1109]], [["new-game-2026/s08.webp", 1768, 817], ["new-game-2026/s09.webp", 1765, 815]]]],
+      ["", [[["new-game-2026/s13.webp", 1421, 3077], ["new-game-2026/s14.webp", 1419, 3073], ["new-game-2026/s15.webp", 1419, 3073], ["new-game-2026/s16.webp", 1421, 3077]]]],
     ],
   },
   {
@@ -97,9 +117,10 @@ const PROJECTS = [
     tags: ["Game UI", "Props"],
     genre: "Hyper-casual music",
     desc: "Players tap and swipe piano tiles moving down the screen. I designed the UI and learned basic 3D software to support the in-game bundle packages.",
+    links: [["Watch on YouTube", "https://www.youtube.com/watch?v=yQeAFnnvX4I"]],
     sections: [
-      ["", [[["beat-drum/s01.webp", 1600, 742]]]],
-      ["Screens", [[["beat-drum/s02.webp", 640, 1387], ["beat-drum/s03.webp", 640, 1387], ["beat-drum/s04.webp", 640, 1387], ["beat-drum/s05.webp", 640, 1387], ["beat-drum/s06.webp", 640, 1387]], [["beat-drum/s07.webp", 640, 1387], ["beat-drum/s08.webp", 640, 1387], ["beat-drum/s09.webp", 640, 1387], ["beat-drum/s10.webp", 640, 1387], ["beat-drum/s11.webp", 640, 1387]], [["beat-drum/s12.webp", 640, 1387], ["beat-drum/s13.webp", 640, 1387], ["beat-drum/s14.webp", 640, 1387], ["beat-drum/s15.webp", 640, 1387], ["beat-drum/s16.webp", 640, 1387]], [["beat-drum/s17.webp", 640, 1387], ["beat-drum/s18.webp", 640, 1387], ["beat-drum/s19.webp", 640, 1387], ["beat-drum/s20.webp", 640, 1387], ["beat-drum/s21.webp", 640, 1387]]]],
+      ["", [[["beat-drum/s01.webp", 2400, 1113]]]],
+      ["Screens", [[["beat-drum/s02.webp", 903, 1956], ["beat-drum/s03.webp", 905, 1961], ["beat-drum/s04.webp", 902, 1955], ["beat-drum/s05.webp", 902, 1955], ["beat-drum/s06.webp", 904, 1959]], [["beat-drum/s07.webp", 905, 1961], ["beat-drum/s08.webp", 905, 1961], ["beat-drum/s09.webp", 905, 1961], ["beat-drum/s10.webp", 905, 1961], ["beat-drum/s11.webp", 905, 1961]], [["beat-drum/s12.webp", 902, 1955], ["beat-drum/s13.webp", 902, 1955], ["beat-drum/s14.webp", 902, 1955], ["beat-drum/s15.webp", 904, 1959], ["beat-drum/s16.webp", 902, 1955]], [["beat-drum/s17.webp", 905, 1961], ["beat-drum/s18.webp", 902, 1955], ["beat-drum/s19.webp", 903, 1957], ["beat-drum/s20.webp", 902, 1955], ["beat-drum/s21.webp", 902, 1955]]]],
     ],
   },
   {
@@ -114,10 +135,10 @@ const PROJECTS = [
     desc: "Character, prop, world map and popup animations rigged in Spine 2D, plus shop and character effects set up in Unity.",
     sections: [
       ["Characters", [[["motion/m01.mp4", 1280, 720], ["motion/m02.mp4", 638, 638]]]],
-      ["Props and obstacles", [[["motion/m03.mp4", 416, 328], ["motion/m04.mp4", 300, 270], ["motion/m05.mp4", 530, 1000]], [["motion/m06.mp4", 1280, 590], ["motion/m07.mp4", 1280, 590]]]],
       ["World maps and popups", [[["motion/m09.mp4", 1280, 590]], [["motion/m10.mp4", 1170, 540], ["motion/m11.mp4", 1170, 540]], [["motion/m12.mp4", 1000, 750], ["motion/m13.mp4", 1000, 750]], [["motion/m08.mp4", 1280, 646]]]],
       ["Splash screen", [[["motion/m14.mp4", 1280, 716]]]],
       ["Unity VFX", [[["motion/m15.mp4", 1280, 822], ["motion/m16.mp4", 1280, 732]]]],
+      ["Props and obstacles", [[["motion/m03.mp4", 416, 328], ["motion/m04.mp4", 300, 270], ["motion/m05.mp4", 530, 1000]], [["motion/m06.mp4", 1280, 590], ["motion/m07.mp4", 1280, 590]]]],
     ],
   },
   {
@@ -129,12 +150,13 @@ const PROJECTS = [
     tags: ["Character", "Background", "Animation", "Props", "Game UI", "UA & store art", "Concept"],
     genre: "Rhythm platformer",
     desc: "I created the initial concept for this rhythm-based platform game, then designed the UI, backgrounds and UA assets such as the logo and app icon. I learned and developed my animation skills on this project.",
+    links: [["Google Play", "https://play.google.com/store/apps/details?id=com.musicgame.catdashgame"], ["App Store", "https://apps.apple.com/vn/app/cat-dash-cute-cat-music-game/id6745498566"]],
     sections: [
-      ["Backgrounds", [[["cat-dash/s01.webp", 1600, 985], ["cat-dash/s02.webp", 1600, 985]], [["cat-dash/s03.webp", 1600, 1313]], [["cat-dash/s04.webp", 1600, 656], ["cat-dash/s05.webp", 1600, 738]], [["cat-dash/s06.webp", 1600, 427]], [["cat-dash/s07.webp", 1600, 360]], [["cat-dash/s08.webp", 1600, 220]]]],
-      ["Gameplay", [[["cat-dash/s09.webp", 1600, 738], ["cat-dash/s10.webp", 1600, 738]]]],
-      ["Social and UA art", [[["cat-dash/s11.webp", 1200, 676], ["cat-dash/s12.webp", 1200, 676], ["cat-dash/s13.webp", 1200, 676]], [["cat-dash/s14.webp", 1200, 676], ["cat-dash/s15.webp", 1200, 676]], [["cat-dash/s16.webp", 1024, 500], ["cat-dash/s17.webp", 1200, 620]]]],
-      ["Characters and logo", [[["cat-dash/s18.webp", 1600, 1258], ["cat-dash/s19.webp", 1000, 1000]], [["cat-dash/s20.webp", 1557, 856]], [["cat-dash/s21.webp", 900, 900], ["cat-dash/s22.webp", 640, 960]]]],
       ["Process and assets", [[["cat-dash/05.webp", 1400, 1920], ["cat-dash/08.webp", 1400, 1920], ["cat-dash/09.webp", 1400, 1920]], [["cat-dash/10.webp", 1400, 1920], ["cat-dash/11.webp", 1400, 1920], ["cat-dash/12.webp", 1400, 1920]], [["cat-dash/13.webp", 1400, 1920], ["cat-dash/04.mp4", 1200, 2246]], [["cat-dash/06.mp4", 1200, 822]], [["cat-dash/07.mp4", 1200, 1646], ["cat-dash/14.mp4", 1200, 1818]]]],
+      ["Backgrounds", [[["cat-dash/s01.webp", 1694, 1043], ["cat-dash/s02.webp", 1694, 1043]], [["cat-dash/s03.webp", 1763, 1447]], [["cat-dash/s04.webp", 1630, 668], ["cat-dash/s05.webp", 1635, 754]], [["cat-dash/s06.webp", 2400, 640]], [["cat-dash/s07.webp", 2400, 540]], [["cat-dash/s08.webp", 2400, 330]]]],
+      ["Gameplay", [[["cat-dash/s09.webp", 1696, 782], ["cat-dash/s10.webp", 1648, 760]]]],
+      ["Social and UA art", [[["cat-dash/s11.webp", 1200, 676], ["cat-dash/s12.webp", 1200, 676], ["cat-dash/s13.webp", 1200, 676]], [["cat-dash/s14.webp", 1705, 960], ["cat-dash/s15.webp", 1701, 958]], [["cat-dash/s16.webp", 1748, 853], ["cat-dash/s17.webp", 1651, 853]]]],
+      ["Characters and logo", [[["cat-dash/s18.webp", 1906, 1498], ["cat-dash/s19.webp", 1495, 1495]], [["cat-dash/s20.webp", 2400, 1319]], [["cat-dash/s21.webp", 2035, 2035], ["cat-dash/s22.webp", 1365, 2048]]]],
     ],
   },
   {
@@ -147,10 +169,10 @@ const PROJECTS = [
     genre: "Puzzle",
     desc: "UI and game concept for a project developed in collaboration with an investor.",
     sections: [
-      ["Gameplay and home", [[["match-factory/s01.webp", 640, 1280], ["match-factory/s02.webp", 640, 1280], ["match-factory/s03.webp", 640, 1280], ["match-factory/s04.webp", 640, 1280], ["match-factory/s05.webp", 640, 1280]]]],
-      ["Events", [[["match-factory/s06.webp", 640, 1280], ["match-factory/s07.webp", 640, 1280], ["match-factory/s08.webp", 640, 1280], ["match-factory/s09.webp", 640, 1280], ["match-factory/s10.webp", 640, 1280]], [["match-factory/s11.webp", 640, 1280], ["match-factory/s12.webp", 640, 1280], ["match-factory/s13.webp", 640, 1280], ["match-factory/s14.webp", 640, 1280], ["match-factory/s15.webp", 640, 1280]]]],
-      ["Shop and rewards", [[["match-factory/s16.webp", 640, 1280], ["match-factory/s17.webp", 640, 1280], ["match-factory/s18.webp", 640, 1280], ["match-factory/s19.webp", 640, 1280], ["match-factory/s20.webp", 640, 1280]]]],
-      ["Profile, teams and settings", [[["match-factory/s21.webp", 640, 1280], ["match-factory/s22.webp", 640, 1280], ["match-factory/s23.webp", 640, 1280], ["match-factory/s24.webp", 640, 1280]], [["match-factory/s25.webp", 640, 1280], ["match-factory/s26.webp", 640, 1280], ["match-factory/s27.webp", 640, 1280]]]],
+      ["Gameplay and home", [[["match-factory/s01.webp", 992, 1983], ["match-factory/s02.webp", 990, 1980], ["match-factory/s03.webp", 990, 1980], ["match-factory/s04.webp", 988, 1975], ["match-factory/s05.webp", 990, 1980]]]],
+      ["Events", [[["match-factory/s06.webp", 991, 1981], ["match-factory/s07.webp", 990, 1980], ["match-factory/s08.webp", 991, 1981], ["match-factory/s09.webp", 995, 1989], ["match-factory/s10.webp", 994, 1987]], [["match-factory/s11.webp", 994, 1987], ["match-factory/s12.webp", 992, 1983], ["match-factory/s13.webp", 990, 1980], ["match-factory/s14.webp", 994, 1987], ["match-factory/s15.webp", 992, 1983]]]],
+      ["Shop and rewards", [[["match-factory/s16.webp", 994, 1989], ["match-factory/s17.webp", 994, 1987], ["match-factory/s18.webp", 990, 1980], ["match-factory/s19.webp", 992, 1983], ["match-factory/s20.webp", 990, 1980]]]],
+      ["Profile, teams and settings", [[["match-factory/s21.webp", 995, 1989], ["match-factory/s22.webp", 995, 1989], ["match-factory/s23.webp", 990, 1980], ["match-factory/s24.webp", 992, 1983]], [["match-factory/s25.webp", 992, 1983], ["match-factory/s26.webp", 992, 1985], ["match-factory/s27.webp", 992, 1983]]]],
     ],
   },
   {
@@ -164,7 +186,7 @@ const PROJECTS = [
     genre: "Isometric farm",
     desc: "Created during the Mobile Game UX/UI course at Art Soup. I practiced user flows, UI screens, buttons, icons and visual elements for a casual mobile game.",
     sections: [
-      ["", [[["riverside-farm/s01.webp", 1600, 1131]], [["riverside-farm/s02.webp", 1600, 1131], ["riverside-farm/s03.webp", 1600, 1131]], [["riverside-farm/s04.webp", 1600, 1131], ["riverside-farm/s05.webp", 1600, 1131]], [["riverside-farm/s06.webp", 1600, 1131], ["riverside-farm/s07.webp", 1600, 1131]], [["riverside-farm/s08.webp", 1600, 1131]]]],
+      ["", [[["riverside-farm/s01.webp", 2400, 1697]], [["riverside-farm/s02.webp", 2400, 1697], ["riverside-farm/s03.webp", 2400, 1697]], [["riverside-farm/s04.webp", 2400, 1696], ["riverside-farm/s05.webp", 2400, 1697]], [["riverside-farm/s06.webp", 2400, 1697], ["riverside-farm/s07.webp", 2400, 1697]], [["riverside-farm/s08.webp", 2400, 1697]]]],
     ],
   },
   {
@@ -319,12 +341,9 @@ const PROJECTS = [
     title: "The Cat That Lived a Million Times",
     tags: ["Book cover"],
     desc: "A school project illustrating the children's book by Sano Yoko.",
-    layout: "gap",
-    media: [
-      ["million-times-cat/01.webp", 1400, 939],
-      ["million-times-cat/02.webp", 600, 450],
-      ["million-times-cat/03.webp", 600, 450],
-      ["million-times-cat/04.webp", 1400, 836],
+    // the two small spreads sit side by side so they are not stretched to the full width
+    sections: [
+      ["", [[["million-times-cat/01.webp", 1400, 939]], [["million-times-cat/02.webp", 600, 450], ["million-times-cat/03.webp", 600, 450]], [["million-times-cat/04.webp", 1400, 836]]]],
     ],
   },
   {

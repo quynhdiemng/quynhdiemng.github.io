@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Fraunces:opsz,wght,SOFT,WONK@9..144,600..900,100,0&family=JetBrains+Mono:wght@400&display=swap">
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
 <a class="skip" href="#games">Skip to work</a>
@@ -129,13 +129,24 @@
 <dialog id="viewer" aria-labelledby="vTitle">
   <div class="v-bar">
     <button type="button" id="vClose">Close</button>
+    <strong id="vName" aria-hidden="true"></strong>
     <span><button type="button" id="vPrev">Previous</button><button type="button" id="vNext">Next</button></span>
   </div>
   <div class="v-body" id="vBody"></div>
 </dialog>
+
+<dialog id="zoom" aria-label="Image preview">
+  <div class="v-bar z-bar">
+    <button type="button" id="zClose">Close</button>
+    <strong class="mono" id="zCount"></strong>
+    <span><button type="button" id="zPrev">Previous</button><button type="button" id="zNext">Next</button></span>
+  </div>
+  <div class="z-stage" id="zStage"></div>
+  <p class="z-hint mono">Click the image to see it full width</p>
+</dialog>
 <noscript><p class="wrap">Please turn on JavaScript to see the projects, or visit behance.net/quynhdiemng.</p></noscript>
-<script src="projects.js?v=17"></script>
-<script src="app.js?v=19"></script>
+<script src="projects.js?v=18"></script>
+<script src="app.js?v=20"></script>
 <script src="motion.js?v=16"></script>
 </body>
 </html>
