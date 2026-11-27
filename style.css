@@ -175,6 +175,8 @@ dialog::backdrop{background:var(--deep)}
 .row>*{flex:var(--a) 1 0;min-width:0;width:100%;height:auto;border-radius:6px;background:var(--deep)}
 .row>.alpha{background:color-mix(in srgb,var(--bg) 82%,var(--green));padding:5% 7%;object-fit:contain}
 .row>.spacer{background:none}
+.row>.spine{position:relative;overflow:hidden}
+.spine .spine-player{background:none!important}
 .crop{position:relative;display:block;overflow:hidden}
 .crop>span{position:absolute;display:block}
 .crop img{width:100%;height:auto}

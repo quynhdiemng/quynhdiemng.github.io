@@ -38,7 +38,7 @@
   function render(box, list, lead) {
     box.replaceChildren(...list.map((p, i) => el('a', { className: lead && !i ? 'tile lead-tile' : 'tile', href: '#' + p.id },
       el('span', { className: 'shot' },
-        el('img', { src: `${A}covers/${p.id}.webp?v=16`, alt: '', loading: 'lazy' }),
+        el('img', { src: `${A}covers/${p.id}.webp?v=20`, alt: '', loading: 'lazy' }),
         ...(p.award ? [el('span', { className: 'award', textContent: p.award })] : [])),
       el('span', { className: 'cap' },
         el('strong', {}, p.title + '\u00a0', el('i', { ariaHidden: 'true', innerHTML: '<svg viewBox="0 0 12 12" width=".62em" height=".62em"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' })), el('em', { textContent: p.year }),
@@ -72,8 +72,19 @@
   const vo = 'IntersectionObserver' in window && new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) e.target.play().catch(() => {}); else e.target.pause();
   }), { rootMargin: '150px 0px' });
+  // Spine animations play live in the official Spine web player, loaded only when a project has one
+  let spineLib;
+  const spinePlayers = [];
+  const loadSpine = () => spineLib || (spineLib = new Promise((ok, no) => {
+    const base = 'https://cdn.jsdelivr.net/npm/@esotericsoftware/spine-player@4.3.12/dist/';
+    document.head.append(el('link', { rel: 'stylesheet', href: base + 'spine-player.css' }));
+    const s = el('script', { src: base + 'iife/spine-player.min.js' });
+    s.onload = () => ok(window.spine); s.onerror = () => { spineLib = null; no(); };
+    document.head.append(s);
+  }));
   let cur = -1, back = 0;
   function show() {
+    spinePlayers.splice(0).forEach(x => { try { x.dispose(); } catch (e) {} }); // free each WebGL canvas
     cur = all.findIndex(p => '#' + p.id === location.hash);
     if (cur < 0) { if (v.open) { v.close(); scrollTo({ top: back, behavior: 'instant' }); } return; }
     const p = all[cur];
@@ -86,6 +97,31 @@
       el('a', { href, target: '_blank', rel: 'noopener', textContent: t + ' ' }, el('i', { ariaHidden: 'true', innerHTML: '<svg viewBox="0 0 12 12" width=".8em" height=".8em"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' }))))] : [];
     const item =([f, w, h, alpha, c]) => {
       if (!f) return el('span', { className: 'spacer' }); // empty slot that keeps a lone image small
+      if (f.startsWith('spine:')) {
+        // 'spine:folder:anim1,anim2' plays folder/skeleton.json; several animations play one after another
+        // an optional 4th part 'x,y,w,h' frames the animation tighter than its full bounds (skeleton units)
+        const [, dir, anims, frame] = f.split(':'), list = anims.split(',');
+        const [vx, vy, vw, vh] = frame ? frame.split(',').map(Number) : [];
+        const pad = frame ? '0%' : '8%';
+        const box = el('div', { className: 'spine', role: 'img', ariaLabel: `${p.title} Spine animation` });
+        box.style.aspectRatio = `${w}/${h}`;
+        loadSpine().then(spine => {
+          if (!box.isConnected) return;
+          spinePlayers.push(new spine.SpinePlayer(box, {
+            skeleton: `${A}projects/${dir}/skeleton.json`, atlas: `${A}projects/${dir}/skeleton.atlas`,
+            animation: list[0], showControls: false, alpha: true, backgroundColor: '#00000000', premultipliedAlpha: false,
+            viewport: { ...(frame ? { x: vx, y: vy, width: vw, height: vh } : {}), padLeft: pad, padRight: pad, padTop: pad, padBottom: pad },
+            success: pl => {
+              if (list.length < 2) return;
+              const st = pl.animationState, run = () => { st.setAnimation(0, list[0], false); list.slice(1).forEach(a => st.addAnimation(0, a, false, 0)); };
+              st.addListener({ complete: e => { if (e.animation.name === list[list.length - 1]) run(); } });
+              run();
+            },
+            error: () => { box.textContent = ''; },
+          }));
+        }).catch(() => {});
+        return box;
+      }
       if (c) {
         // a w×h window cut from sheets stacked top to bottom (see crop() in projects.js)
         const box = el('span', { className: 'crop', role: 'img', ariaLabel: `${p.title} artwork` });
@@ -95,8 +131,8 @@
         box.append(inner);
         return box;
       }
-      // ?v=2: artwork re-exported sharp from Figma, so browsers drop the old cached files
-      const src = `${A}projects/${f}` + (f.endsWith('.webp') ? '?v=2' : '');
+      // ?v=6: artwork re-exported sharp from Figma, so browsers drop the old cached files
+      const src = `${A}projects/${f}` + (f.endsWith('.webp') ? '?v=6' : '');
       if (f.endsWith('.mp4')) {
         // play only while on screen, so a project with many clips stays light
         const n = el('video', { src, width: w, height: h, muted: true, loop: true, controls: still, playsInline: true, preload: 'metadata' });
