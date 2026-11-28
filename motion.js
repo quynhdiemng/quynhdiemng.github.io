@@ -36,13 +36,9 @@
   const watch = root => root.querySelectorAll('.kicker,.head,.filters,.tile,.about-text>*,.kit>div,.job,.mail,.cells>div').forEach(n => io.observe(n));
   watch(document);
 
-  // Hero glow follows the pointer
-  const hero = document.querySelector('.hero');
-  hero.addEventListener('pointermove', e => {
-    const r = hero.getBoundingClientRect();
-    hero.style.setProperty('--gx', e.clientX - r.left + 'px');
-    hero.style.setProperty('--gy', e.clientY - r.top + 'px');
-  });
+  // Background glow follows the pointer anywhere on the page
+  const glow = document.querySelector('.glow');
+  addEventListener('pointermove', e => { glow.style.translate = e.clientX + 'px ' + e.clientY + 'px'; }, { passive: true });
 
   // Numbers count up once
   const nums = new IntersectionObserver(es => es.forEach(e => {
